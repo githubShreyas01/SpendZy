@@ -10,7 +10,7 @@ Welcome to the SpendZy project inspired by PayTM. This project aims to replicate
 ## Technology Stack
 * Frontend:
   - React.js
-  - Tailwind CSS
+  - Vanilla CSS
 * Backend:
   - Node.js
   - Express.js
