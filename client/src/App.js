@@ -4,12 +4,19 @@ import "./stylesheets/form-elements.css";
 import "./stylesheets/alignments.css";
 import "./stylesheets/custom-components.css";
 import "./stylesheets/theme.css";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
   return (
-    <div className='bg-secondary h-screen flex items-center justify-center'>
-        <h1>SpendZy</h1>
-        <Button type="primary">primary Button</Button>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/register" element={<Register/>}/>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

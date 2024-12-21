@@ -7,7 +7,12 @@
 .h-50{
     height: 50%;
 }
-
+.w-100{
+    width: 100%;
+}
+.w-400{
+    width: 400px;
+}
 .w-screen{
     width: 100vx;
 }
@@ -63,6 +68,15 @@
 }
 .m-3{
     margin: 30px;
+}
+.m-4{
+    margin: 40px;
+}
+.m-5{
+    margin: 50px;
+}
+.mt-2{
+    margin-top: 20px
 }
 
 .p-1{
