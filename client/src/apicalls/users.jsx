@@ -18,4 +18,14 @@ export const RegisterUser = async (payload) => {
     } catch (error) {
         return error.response.data;
     }
+};
+
+//get user details
+export const GetUserInfo = async() => {
+try {
+    const {data} = await axiosInstance.post("/api/users/get-user-info");
+    return data;
+} catch (error) {
+    return error.response.data;
 }
+};
