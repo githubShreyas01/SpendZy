@@ -2,26 +2,33 @@ import React, { useEffect } from "react";
 import { GetUserInfo } from "../apicalls/users";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { SetUser } from "../redux/usersSlice";
+import DefaultLayout from "./DefaultLayout";
 
 function ProtectedRoute(props) {
 
-    const [userData, setUserData] = React.useState(null)
+    const {user} = useSelector(state => state.users);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const getData = async () => {
         try {
             const response = await GetUserInfo()
             if (response.success) {
-                setUserData(response.data)
+                dispatch(SetUser(response.data));
+            }else{
+                message.error(response.message);
             }
         } catch (error) {
+            navigate("/login");
             message.error(error.message);
         }
     };
 
     useEffect(() => {
         if(localStorage.getItem("token")){
-            if(!userData){
+            if(!user){
                 getData();
             }
         }else{
@@ -30,8 +37,11 @@ function ProtectedRoute(props) {
     }, []);
 
     return (
+        user && 
         <div>
-            {props.children}
+            <DefaultLayout>
+                {props.children}
+            </DefaultLayout>
         </div>
     )
 }
