@@ -15,7 +15,7 @@ function DefaultLayout({ children }) {
             path: "/",
         },
         {
-            title: "Transaction",
+            title: "Transactions",
             icon: <i class="ri-bank-line"></i>,
             onClick: () => navigate("/transactions"),
             path: "/transactions",
@@ -95,7 +95,7 @@ function DefaultLayout({ children }) {
                         const isActive = window.location.pathname === item.path;
                         return <div className={`menu-item ${isActive ? "active-menu-item" : ""}`} onClick={item.onClick}>
                             {item.icon}
-                            {!collapsed && <h1 className="text-white text-sm">{item.title}</h1>}
+                            {!collapsed && <h1 className="text-sm">{item.title}</h1>}
                         </div>
                     })}
                 </div>

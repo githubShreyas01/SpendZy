@@ -17,8 +17,8 @@ input:focus, select:focus, textarea:focus{
 }
 
 .primary-outlined-btn{
-    background-color: var(--primary);
-    color: white;
+    background-color:white;
+    color: var(--primary);
     padding: 8px 20px;
     text-transform: uppercase;
     border: 1px solid var(--primary);
