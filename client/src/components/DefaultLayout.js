@@ -107,12 +107,12 @@ function DefaultLayout({ children }) {
                         {!collapsed && <i class="ri-menu-unfold-3-line" onClick={() => setCollapsed(!collapsed)}></i>}
                     </div>
                     <div>
-                        <h1 className="text-xl text-white">
+                        <h1 className="text-xl text-secondary">
                             SpendZy
                         </h1>
                     </div>
                     <div>
-                        <h1 className="text-sm underline text-white">
+                        <h1 className="text-sm underline text-secondary">
                             {user?.firstName} {user?.lastName}
                         </h1>
                     </div>
