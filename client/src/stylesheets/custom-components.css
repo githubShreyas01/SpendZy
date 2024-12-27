@@ -1,6 +1,10 @@
 .card{
     background-color: white;
-    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.453);
+}
+
+.br-3{
+    border-radius: 3px;
 }
 
 table{

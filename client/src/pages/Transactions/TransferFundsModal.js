@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Modal } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { VerifyAccount } from "../../apicalls/transactions";
 //import {ShowLoading, HideLoading} from "../../redux/loaderSlice"
 
@@ -8,7 +8,8 @@ function TransferFundsModal({
     showTransferFundsModal,
     setShowTransferFundsModal,
     reloadData
-}) {
+}) { 
+    const {user} = useSelector(state => state.users);
     const [isVerified, setIsVerified] = React.useState('');
     const [form] = Form.useForm();
     const dispatch = useDispatch();
@@ -60,7 +61,16 @@ function TransferFundsModal({
                         </div>
                     )}
 
-                    <Form.Item label="Amount" name="amount">
+                    <Form.Item label="Amount" name="amount" rules={[
+                        {
+                            required: true,
+                            message: "Please input your amount",
+                        },
+                        {
+                            max: user.balance,
+                            message: "Insufficient Balance",
+                        }
+                    ]}>
                         <input type="text" />
                     </Form.Item>
 
@@ -70,7 +80,7 @@ function TransferFundsModal({
 
                     <div className="flex justify-end gap-1">
                         <button className="primary-outlined-btn">Cancel</button>
-                        <button className="primary-contained-btn">Transfer</button>
+                        {Number(form.getFieldValue("amount")) < user.balance && isVerified === "true" && <button className="primary-contained-btn">Transfer</button>}
                     </div>
                 </Form>
             </Modal>
