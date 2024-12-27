@@ -9,7 +9,7 @@ const connectDb = require("./config/dbConfig");
 connectDb();
 
 app.use("/api/users", usersRoute);
-app.use("/api/transaction", transactionsRoute);
+app.use("/api/transactions", transactionsRoute);
 
 const PORT = process.env.PORT || 5000;
 
