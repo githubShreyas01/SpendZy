@@ -4,16 +4,19 @@ const authMiddleware = require("../middlewares/authMiddleware");
 const User = require("../models/usersModel");
 
 //transfer money from one account to another
-router.post("/transfer-fund", authMiddleware, async (req, res) => {
+router.post("/transfer-funds", authMiddleware, async (req, res) => {
     try {
         //save the transaction
         const newTransaction = new Transaction(req.body);
         await newTransaction.save();
 
         //decrease the sender's balance
-        await User.findByIdAndUpdate(req.body.sender, {
+        const senderupdate = await User.findByIdAndUpdate(req.body.sender, {
             $inc: { balance: -req.body.amount },
         });
+
+        console.log("sender update:", senderupdate);
+        console.log(req.body.amount);
 
         //increase the receiver's balance
         await User.findByIdAndUpdate(req.body.receiver, {
