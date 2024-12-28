@@ -11,12 +11,9 @@ router.post("/transfer-funds", authMiddleware, async (req, res) => {
         await newTransaction.save();
 
         //decrease the sender's balance
-        const senderupdate = await User.findByIdAndUpdate(req.body.sender, {
+        await User.findByIdAndUpdate(req.body.sender, {
             $inc: { balance: -req.body.amount },
         });
-
-        console.log("sender update:", senderupdate);
-        console.log(req.body.amount);
 
         //increase the receiver's balance
         await User.findByIdAndUpdate(req.body.receiver, {
