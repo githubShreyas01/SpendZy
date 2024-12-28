@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import PageTitle from "../../components/PageTitle";
 import { Table, message } from "antd";
 import TransferFundsModal from "./TransferFundsModal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GetTransactionsOfUser } from "../../apicalls/transactions";
 //import {HideLoading, ShowLoading} from "../../redux/loaderSlice";
 import moment from "moment";
@@ -11,7 +11,7 @@ function Transactions() {
     const [showTransferFundsModal, setShowTransferFundsModal] = React.useState(false);
     const [data = [], setData] = React.useState([]);
     const dispatch = useDispatch();
-
+    const {user} = useSelector(state => state.users);
     const columns = [
         {
             title: "Date",
@@ -31,6 +31,9 @@ function Transactions() {
         {
             title: "Type",
             dataIndex: "type",
+            render: (text, record) =>{
+                return record.sender === user._id ? "Debit" : "Credit"
+            }
         },
         {
             title: "Reference",
