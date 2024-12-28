@@ -36,6 +36,13 @@ function Transactions() {
             }
         },
         {
+            title: "Reference Account",
+            dataIndex: "",
+            render: (text, record) =>{
+                return record.sender === user._id ? record.receiver : record.sender
+            } 
+        },
+        {
             title: "Reference",
             dataIndex: "reference",
         },
