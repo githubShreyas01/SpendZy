@@ -19,3 +19,13 @@ export const TransferFunds = async (payload) => {
         return error.response.data;
     }
 }
+
+//get all transactions for user
+export const GetTransactionsOfUser = async () => {
+    try {
+        const { data } = await axiosInstance.post("/api/transactions/get-all-transactions-by-user");
+        return data;
+    } catch (error) {
+        return error.response.data;
+    }
+}
