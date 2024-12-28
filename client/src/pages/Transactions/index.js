@@ -32,14 +32,18 @@ function Transactions() {
             title: "Type",
             dataIndex: "type",
             render: (text, record) =>{
-                return record.sender === user._id ? "Debit" : "Credit"
+                return record.sender._id === user._id ? "Debit" : "Credit"
             }
         },
         {
             title: "Reference Account",
             dataIndex: "",
             render: (text, record) =>{
-                return record.sender === user._id ? record.receiver : record.sender
+                return record.sender._id === user._id ? <div>
+                    <h1 className="text-sm uppercase">{record.receiver.firstName} {record.receiver.lastName}</h1>
+                </div> : <div>
+                    <h1 className="text-sm uppercase">{record.sender.firstName} {record.sender.lastName}</h1>
+                </div>
             } 
         },
         {
