@@ -3,10 +3,11 @@ import { Form, Modal, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { TransferFunds, VerifyAccount } from "../../apicalls/transactions";
 //import {ShowLoading, HideLoading} from "../../redux/loaderSlice"
+import {SendRequest} from "../../apicalls/requests";
 
-function TransferFundsModal({
-    showTransferFundsModal,
-    setShowTransferFundsModal,
+function NewRequestModal({
+    showNewRequestModal,
+    setShowNewRequestModal,
     reloadData
 }) {
     const { user } = useSelector(state => state.users);
@@ -41,10 +42,10 @@ function TransferFundsModal({
                 status: "success",
                 reference: values.reference || "no reference",
             };
-            const response = await TransferFunds(payload);
+            const response = await SendRequest(payload);
             if(response.success){
                 reloadData();
-                setShowTransferFundsModal(false);
+                setShowNewRequestModal(false);
                 message.success(response.message);
             }else{
                 message.error(response.message);
@@ -59,9 +60,9 @@ function TransferFundsModal({
         <div>
             <Modal
                 title="Transfer Funds"
-                open={showTransferFundsModal}
-                onCancel={() => setShowTransferFundsModal(false)}
-                onClose={() => setShowTransferFundsModal(false)}
+                open={showNewRequestModal}
+                onCancel={() => setShowNewRequestModal(false)}
+                onClose={() => setShowNewRequestModal(false)}
                 footer={null}
             >
                 <Form layout="vertical" form={form}
@@ -99,13 +100,13 @@ function TransferFundsModal({
                         <input type="text" />
                     </Form.Item>
 
-                    <Form.Item label="Reference" name="reference">
+                    <Form.Item label="Description" name="description">
                         <textarea type="text" />
                     </Form.Item>
 
                     <div className="flex justify-end gap-1">
                         <button className="primary-outlined-btn">Cancel</button>
-                        {isVerified === "true" && <button className="primary-contained-btn">Transfer</button>}
+                        {isVerified === "true" && <button className="primary-contained-btn">Request</button>}
                     </div>
                 </Form>
             </Modal>
@@ -113,4 +114,4 @@ function TransferFundsModal({
     )
 }
 
-export default TransferFundsModal;
+export default NewRequestModal;

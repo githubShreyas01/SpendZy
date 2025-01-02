@@ -6,17 +6,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { GetTransactionsOfUser } from "../../apicalls/transactions";
 //import {HideLoading, ShowLoading} from "../../redux/loaderSlice";
 import moment from "moment";
+import DepositModal from "./DepositModal";
 
 function Transactions() {
     const [showTransferFundsModal, setShowTransferFundsModal] = React.useState(false);
+    const [showDepositModal, setShowDepositModal] = React.useState(false);
     const [data = [], setData] = React.useState([]);
     const dispatch = useDispatch();
-    const {user} = useSelector(state => state.users);
+    const { user } = useSelector(state => state.users);
     const columns = [
         {
             title: "Date",
             dataIndex: "date",
-            render: (text, record) =>{
+            render: (text, record) => {
                 return moment(record.createdAt).format("DD-MM-YYYY hh:mm:ss A")
             }
         },
@@ -31,20 +33,20 @@ function Transactions() {
         {
             title: "Type",
             dataIndex: "type",
-            render: (text, record) =>{
+            render: (text, record) => {
                 return record.sender._id === user._id ? "Debit" : "Credit"
             }
         },
         {
             title: "Reference Account",
             dataIndex: "",
-            render: (text, record) =>{
+            render: (text, record) => {
                 return record.sender._id === user._id ? <div>
                     <h1 className="text-sm uppercase">{record.receiver.firstName} {record.receiver.lastName}</h1>
                 </div> : <div>
                     <h1 className="text-sm uppercase">{record.sender.firstName} {record.sender.lastName}</h1>
                 </div>
-            } 
+            }
         },
         {
             title: "Reference",
@@ -69,7 +71,7 @@ function Transactions() {
         }
     };
 
-    useEffect(() =>{
+    useEffect(() => {
         getData();
     });
 
@@ -79,7 +81,7 @@ function Transactions() {
                 <PageTitle title="Transactions" />
 
                 <div className="flex gap-1">
-                    <button className="primary-outlined-btn">Deposit</button>
+                    <button className="primary-outlined-btn" onClick={() => setShowDepositModal(true)} >Deposit</button>
                     <button className="primary-contained-btn" onClick={() => setShowTransferFundsModal(true)}>Transfer</button>
                 </div>
             </div>
@@ -88,6 +90,13 @@ function Transactions() {
             {showTransferFundsModal && <TransferFundsModal
                 showTransferFundsModal={showTransferFundsModal}
                 setShowTransferFundsModal={setShowTransferFundsModal}
+                reloadData={getData}
+            />}
+
+            {showDepositModal && <DepositModal
+                showDepositModal={showDepositModal}
+                setShowDepositModal={setShowDepositModal}
+                reloadData={getData}
             />}
         </div>
     )
