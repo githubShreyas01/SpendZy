@@ -59,7 +59,7 @@ function NewRequestModal({
     return (
         <div>
             <Modal
-                title="Transfer Funds"
+                title="Request Funds"
                 open={showNewRequestModal}
                 onCancel={() => setShowNewRequestModal(false)}
                 onClose={() => setShowNewRequestModal(false)}

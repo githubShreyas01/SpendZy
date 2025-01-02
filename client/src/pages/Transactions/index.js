@@ -73,7 +73,7 @@ function Transactions() {
 
     useEffect(() => {
         getData();
-    });
+    }, []);
 
     return (
         <div>

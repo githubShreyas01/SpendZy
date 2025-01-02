@@ -24,7 +24,7 @@ function DefaultLayout({ children }) {
             title: "Requests",
             icon: <i class="ri-hand-heart-line"></i>,
             onClick: () => navigate("/requests"),
-            path: "/request",
+            path: "/requests",
         },
         {
             title: "Profile",

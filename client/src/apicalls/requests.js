@@ -13,7 +13,7 @@ export const GetAllRequestsByUser = async () => {
 //send request to another user
 export const SendRequest = async (request) => {
     try {
-        const { data } = await axiosInstance.post("/api/requests/send-request");
+        const { data } = await axiosInstance.post("/api/requests/send-request", request);
         return data;
     } catch (error) {
         return error.response.data;
