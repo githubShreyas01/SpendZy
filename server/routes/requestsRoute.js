@@ -7,7 +7,7 @@ const Request = require("../models/requestsModel");
 router.post("/get-all-requests-by-user", authMiddleware, async (req, res) => {
     try {
         const requests = await Request.find({
-            $or: [{ sender: req.user._id }, { receiver: req.user._id }],
+            $or: [{ sender: req.body.userId }, { receiver: req.body.userId }],
         })
             .populate("sender")
             .populate("receiver");
@@ -37,7 +37,7 @@ router.post("/send-request", authMiddleware, async (req, res) => {
         await request.save();
 
         res.send({
-            data: requests,
+            data: request,
             message: "Requests sent successfully",
             success: true,
         })
