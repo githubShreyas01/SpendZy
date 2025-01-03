@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Table, Tabs, message } from "antd";
 import PageTitle from "../../components/PageTitle";
 import NewRequestModal from "./NewRequestModal";
-import { GetAllRequestsByUser } from "../../apicalls/requests";
+import { GetAllRequestsByUser, UpdateRequestStatus } from "../../apicalls/requests";
 import { useDispatch, useSelector } from "react-redux";
 //import {HideLoading, ShowLoading} from "../../redux/loaderSlice";
 import moment from "moment";
@@ -13,42 +13,7 @@ function Requests() {
     const [data, setData] = React.useState([]);
     const [showNewRequestModal, setShowNewRequestModal] = React.useState(false);
     //const dispatch = useDispatch();
-    const { user } = useSelector(state => state.users);
-    const columns = [
-        {
-            title: "Request Id",
-            dataIndex: "_id",
-        },
-        {
-            title: "Sender",
-            dataIndex: "sender",
-            render(sender){
-                return sender.firstName + " " + sender.lastName;
-            }
-        },
-        {
-            title: "Receiver",
-            dataIndex: "receiver",
-            render(receiver){
-                return receiver.firstName + " " + receiver.lastName;
-            }
-        },
-        {
-            title: "Amount",
-            dataIndex: "amount",
-        },
-        {
-            title: "Date",
-            dataIndex: "date",
-            render(text, record) {
-                return moment(record.createdAt).format("DD-MM-YYYY hh:mm:ss A");
-            },
-        },
-        {
-            title: "Status",
-            dataIndex: "status",
-        },
-    ];
+    const { user } = useSelector((state) => state.users);
 
     const getData = async () => {
         try {
@@ -68,6 +33,76 @@ function Requests() {
             message.error(error.message);
         }
     };
+
+    const updateStatus = async (record, status) => {
+        try {
+            //dispatch(ShowLoading());
+            const response = await UpdateRequestStatus({
+                ...record,
+                status,
+            });
+            //dispatch(HideLoading());
+            if(response.success){
+                message.success(response.message);
+                getData();
+            }else{
+                message.error(response.message);
+            }
+        } catch (error) {
+            //dispatch(HideLoading());
+            message.error(error.message);
+        }
+    };
+
+    const columns = [
+        {
+            title: "Request Id",
+            dataIndex: "_id",
+        },
+        {
+            title: "Sender",
+            dataIndex: "sender",
+            render(sender) {
+                return sender.firstName + " " + sender.lastName;
+            }
+        },
+        {
+            title: "Receiver",
+            dataIndex: "receiver",
+            render(receiver) {
+                return receiver.firstName + " " + receiver.lastName;
+            }
+        },
+        {
+            title: "Amount",
+            dataIndex: "amount",
+        },
+        {
+            title: "Date",
+            dataIndex: "date",
+            render(text, record) {
+                return moment(record.createdAt).format("DD-MM-YYYY hh:mm:ss A");
+            },
+        },
+        {
+            title: "Status",
+            dataIndex: "status",
+        },
+        {
+            title: "Action",
+            dataIndex: "action",
+            render: (text, record) => {
+                if (record.status === "pending" && record.receiver._id === user._id) {
+                    return (
+                        <div className="flex gap-1">
+                            <h1 className="text-sm underline" onClick={() => updateStatus(record, "rejected")}>Reject</h1>
+                            <h1 className="text-sm underline" onClick={() => updateStatus(record, "accepted")}>Accept</h1>
+                        </div>
+                    )
+                }
+            }
+        },
+    ];
 
     useEffect(() => {
         getData();

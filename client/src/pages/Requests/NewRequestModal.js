@@ -10,7 +10,7 @@ function NewRequestModal({
     setShowNewRequestModal,
     reloadData
 }) {
-    const { user } = useSelector(state => state.users);
+    const { user } = useSelector((state) => state.users);
     const [isVerified, setIsVerified] = React.useState('');
     const [form] = Form.useForm();
     const dispatch = useDispatch();
@@ -42,7 +42,13 @@ function NewRequestModal({
                 status: "success",
                 reference: values.reference || "no reference",
             };
+
+            console.log("Payload:", payload); // Debugging
+
             const response = await SendRequest(payload);
+
+            console.log("API Response:", response); // Debugging
+
             if(response.success){
                 reloadData();
                 setShowNewRequestModal(false);
@@ -62,7 +68,6 @@ function NewRequestModal({
                 title="Request Funds"
                 open={showNewRequestModal}
                 onCancel={() => setShowNewRequestModal(false)}
-                onClose={() => setShowNewRequestModal(false)}
                 footer={null}
             >
                 <Form layout="vertical" form={form}
@@ -105,8 +110,8 @@ function NewRequestModal({
                     </Form.Item>
 
                     <div className="flex justify-end gap-1">
-                        <button className="primary-outlined-btn">Cancel</button>
-                        {isVerified === "true" && <button className="primary-contained-btn">Request</button>}
+                        <button className="primary-outlined-btn" type="button" onClick={() => setShowNewRequestModal(false)}>Cancel</button>
+                        {isVerified === "true" && <button className="primary-contained-btn" type="submit" >Request</button>}
                     </div>
                 </Form>
             </Modal>
