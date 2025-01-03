@@ -46,5 +46,14 @@ router.post("/send-request", authMiddleware, async (req, res) => {
     }
 });
 
+//update a request status
+router.post("/update-request-status", authMiddleware, async (req, res) => {
+    try {
+
+    } catch (error) {
+
+    }
+});
+
 
 module.exports = router;
